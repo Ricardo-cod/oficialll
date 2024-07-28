@@ -1,0 +1,229 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>LogTech Academy</title>
+    <link rel="stylesheet" href="styles.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
+    <style>
+        .button-container {
+            position: relative;
+        }
+
+        .dropdown {
+            display: block; /* Mude de none para block */
+            position: absolute;
+            background-color: white;
+            border: 1px solid #ccc;
+            z-index: 1;
+            margin-top: 8px;
+            width: 200px;
+        }
+
+        .dropdown button {
+            display: block;
+            padding: 10px;
+            text-align: center;
+            text-decoration: none;
+            color: #000;
+            border: 1px solid #ccc;
+            margin: 5px 0;
+            transition: background-color 0.3s;
+        }
+
+        .dropdown button:hover {
+            background-color: #f0f0f0;
+        }
+
+        .floating-window {
+            display: none;
+            position: fixed;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            background-color: white;
+            border: 1px solid #ccc;
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+            z-index: 10;
+            padding: 20px;
+            width: 800px;
+            height: 600px;
+            overflow: hidden;
+        }
+
+        .floating-window iframe {
+            width: 100%;
+            height: 100%;
+            border: none;
+        }
+
+        .floating-window button {
+            margin-top: 10px;
+        }
+
+        .overlay {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0, 0, 0, 0.5);
+            z-index: 9;
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <nav>
+            <h1>LogTech Academy</h1>
+            <button id="theme-toggle">🌙</button>
+        </nav>
+        <div class="background">
+            <h1>Bem-vindo à LogTech Academy</h1>
+        </div>
+        <div class="button-container">
+            <button id="pro-ri-btn">Acessar Cursos PRO-RI</button>
+            <div class="dropdown" id="courses-dropdown">
+                <button id="excel-button">Curso de Excel</button>
+                <button id="word-button">Curso de Word</button>
+            </div>
+            <button id="senai-btn" onclick="openInNewWindow('https://eugene6869.hocoos.com')">Cursos Senai LogTech</button>
+        </div>
+    </header>
+
+    <main>
+        <div id="login-container">
+            <h2>Login</h2>
+            <form id="login-form">
+                <label for="username">Nome de Usuário:</label>
+                <input type="text" id="username" required>
+                <button type="submit">Entrar</button>
+            </form>
+        </div>
+
+        <div id="activity-container" class="hidden">
+            <h2>Enviar Atividades</h2>
+            <form id="activity-form">
+                <label for="recipient">Enviar para (Nome do Professor):</label>
+                <input type="text" id="recipient" required>
+                <label for="activity-title">Título da Atividade:</label>
+                <input type="text" id="activity-title" required>
+                <label for="activity-description">Descrição:</label>
+                <textarea id="activity-description" required></textarea>
+                <button type="submit">Enviar Atividade</button>
+            </form>
+            <h3>Atividades Enviadas</h3>
+            <ul id="activity-list"></ul>
+        </div>
+
+        <div id="received-activities-container" class="hidden">
+            <h2>Atividades Recebidas</h2>
+            <ul id="received-activity-list"></ul>
+            <h3>Reenviar Atividade</h3>
+            <form id="resend-activity-form">
+                <label for="resend-activity-title">Título da Atividade:</label>
+                <input type="text" id="resend-activity-title" required>
+                <label for="resend-activity-description">Descrição:</label>
+                <textarea id="resend-activity-description" required></textarea>
+                <button type="submit">Reenviar Atividade</button>
+            </form>
+        </div>
+
+        <div id="professor-login-container">
+            <h2>Acessar como Professor</h2>
+            <form id="professor-login-form">
+                <label for="professor-name">Nome do Professor:</label>
+                <input type="text" id="professor-name" required>
+                <label for="professor-password">Senha:</label>
+                <input type="password" id="professor-password" required>
+                <button type="submit">Entrar</button>
+            </form>
+            <div id="professor-activities-container" class="hidden">
+                <h2>Atividades Recebidas</h2>
+                <ul id="professor-activity-list"></ul>
+                <h3>Enviar Atividade para Todos os Usuários</h3>
+                <form id="professor-activity-form">
+                    <label for="professor-activity-title">Título da Atividade:</label>
+                    <input type="text" id="professor-activity-title" required>
+                    <label for="professor-activity-description">Descrição:</label>
+                    <textarea id="professor-activity-description" required></textarea>
+                    <button type="submit">Enviar Atividade</button>
+                </form>
+            </div>
+        </div>
+    </main>
+
+    <div id="loading" class="hidden">Carregando...</div>
+    
+    <div class="overlay" id="overlay"></div>
+    <div class="floating-window" id="floating-window">
+        <h2 id="floating-title"></h2>
+        <div id="floating-description">
+            <iframe id="course-iframe" src="" frameborder="0"></iframe>
+        </div>
+        <button id="close-window">Fechar</button>
+    </div>
+
+    <script src="script.js"></script>
+    <script>
+        function openInNewWindow(url) {
+            window.open(url, '_blank', 'width=800,height=600');
+        }
+
+        const proRiButton = document.getElementById('pro-ri-btn');
+        const dropdown = document.getElementById('courses-dropdown');
+        const excelButton = document.getElementById('excel-button');
+        const wordButton = document.getElementById('word-button');
+        const overlay = document.getElementById('overlay');
+        const floatingWindow = document.getElementById('floating-window');
+        const floatingTitle = document.getElementById('floating-title');
+        const courseIframe = document.getElementById('course-iframe');
+        const closeWindow = document.getElementById('close-window');
+
+        // Alterna a visibilidade do dropdown ao clicar no botão "Acessar Cursos PRO-RI"
+        proRiButton.addEventListener('click', (e) => {
+            e.stopPropagation();
+            dropdown.style.display = dropdown.style.display === 'block' ? 'none' : 'block'; // Alterna a exibição do dropdown
+        });
+
+        // Exibir janela flutuante ao clicar em Excel
+        excelButton.addEventListener('click', (e) => {
+            e.preventDefault();
+            overlay.style.display = 'block';
+            floatingWindow.style.display = 'block';
+            floatingTitle.textContent = 'Curso de Excel';
+            courseIframe.src = 'https://guia-basico-excel-5974tmg.gamma.site/'; // Link do Excel
+        });
+
+        // Exibir janela flutuante ao clicar em Word
+        wordButton.addEventListener('click', (e) => {
+            e.preventDefault();
+            overlay.style.display = 'block';
+            floatingWindow.style.display = 'block';
+            floatingTitle.textContent = 'Curso de Word';
+            courseIframe.src = 'https://tutorial-do-microsoft-wo-y7qgy7z.gamma.site/';
+        });
+
+        // Fecha a janela flutuante
+        closeWindow.addEventListener('click', () => {
+            overlay.style.display = 'none';
+            floatingWindow.style.display = 'none';
+            courseIframe.src = ''; // Limpa o src do iframe
+        });
+
+        // Fecha o dropdown se clicar fora dele
+        document.addEventListener('click', (e) => {
+            if (!proRiButton.contains(e.target) && !dropdown.contains(e.target)) {
+                dropdown.style.display = 'none'; // Esconde o dropdown
+            }
+            if (!overlay.contains(e.target) && !floatingWindow.contains(e.target)) {
+                overlay.style.display = 'none';
+                floatingWindow.style.display = 'none';
+                courseIframe.src = ''; // Limpa o src do iframe
+            }
+        });
+    </script>
+</body>
+</html>

@@ -1,0 +1,177 @@
+/* Estilos Gerais */
+body {
+    font-family: 'Roboto', sans-serif; /* Fonte moderna e limpa */
+    margin: 0;
+    padding: 0;
+    background-color: #eef2f3; /* Fundo neutro suave */
+    color: #333; /* Texto escuro */
+    line-height: 1.6; /* Espaçamento entre linhas */
+    transition: background-color 0.3s ease, color 0.3s ease; /* Transição suave */
+}
+
+/* Estrutura do Layout */
+header, nav, main, footer {
+    padding: 20px;
+    max-width: 1200px; /* Largura máxima para centralização */
+    margin: 0 auto; /* Centraliza o conteúdo */
+}
+
+/* Navegação */
+nav {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    background-color: #2c3e50; /* Fundo do nav */
+    color: #ecf0f1; /* Texto do nav */
+    padding: 15px 20px; /* Preenchimento do nav */
+    border-radius: 8px; /* Bordas arredondadas */
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2); /* Sombra suave */
+}
+
+nav h1 {
+    font-size: 1.8rem; /* Tamanho do título do nav */
+    margin: 0; /* Remove margens */
+}
+
+/* Seção de Boas-Vindas */
+.background {
+    background-color: #ffffff; /* Fundo da seção de boas-vindas */
+    padding: 50px 30px; /* Preenchimento generoso */
+    border-radius: 10px; /* Bordas arredondadas */
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1); /* Sombra suave */
+    margin-bottom: 20px; /* Espaçamento inferior */
+    text-align: center; /* Centraliza texto */
+}
+
+/* Estilos de Títulos */
+h1, h2, h3 {
+    color: #2980b9; /* Cor do título */
+    text-shadow: 1px 1px 0 #fff; /* Contorno branco */
+    animation: fadeIn 0.5s; /* Animação ao carregar */
+}
+
+/* Botões e Containers */
+.button-container {
+    margin: 20px 0; /* Margem vertical */
+}
+
+button {
+    padding: 12px 25px; /* Preenchimento dos botões */
+    margin: 10px 0; /* Margem vertical */
+    font-size: 1rem; /* Tamanho da fonte responsivo */
+    cursor: pointer;
+    border: none; /* Remove a borda padrão dos botões */
+    border-radius: 5px; /* Bordas arredondadas */
+    background-color: #2980b9; /* Cor do botão */
+    color: #fff; /* Cor do texto do botão */
+    transition: background-color 0.3s ease, transform 0.2s ease, box-shadow 0.3s ease; /* Transições suaves */
+    width: 100%; /* Largura total */
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1); /* Sombra do botão */
+}
+
+button:hover {
+    background-color: #3498db; /* Cor do botão ao passar o mouse */
+    transform: translateY(-2px); /* Leve movimento ao passar o mouse */
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2); /* Aumenta sombra ao passar o mouse */
+}
+
+.hidden {
+    display: none; /* Esconde elementos com a classe 'hidden' */
+}
+
+/* Botão de Tema */
+#theme-toggle {
+    background: none; /* Remove fundo do botão */
+    border: none; /* Remove borda do botão */
+    color: inherit; /* Herda a cor do texto */
+    font-size: 1.5rem; /* Tamanho da fonte do botão */
+    cursor: pointer; /* Muda o cursor ao passar o mouse */
+    transition: transform 0.3s ease; /* Transição suave para escala */
+}
+
+#theme-toggle:active {
+    transform: scale(1.1); /* Animação ao clicar no botão */
+}
+
+/* Estilos para Modo Escuro */
+body.dark-mode {
+    background-color: #34495e; /* Fundo escuro */
+    color: #ecf0f1; /* Texto claro */
+}
+
+body.dark-mode nav {
+    background-color: #2c3e50; /* Fundo do nav no tema escuro */
+}
+
+body.dark-mode .background {
+    background-color: #455a64; /* Fundo da seção de boas-vindas no tema escuro */
+}
+
+body.dark-mode button {
+    background-color: #3b5998; /* Fundo dos botões no tema escuro */
+}
+
+body.dark-mode button:hover {
+    background-color: #4c70ba; /* Fundo dos botões ao passar o mouse no tema escuro */
+}
+
+/* Contêineres */
+#login-container, #activity-container {
+    margin: 20px 0; /* Margem vertical */
+    padding: 20px;
+    border: 1px solid #ccc; /* Borda do container */
+    background-color: #ffffff; /* Fundo do container no tema claro */
+    color: #333; /* Cor do texto no tema claro */
+    border-radius: 10px; /* Bordas arredondadas */
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1); /* Sombra suave */
+    transition: background-color 0.3s ease, color 0.3s ease; /* Transição suave */
+}
+
+body.dark-mode #login-container, body.dark-mode #activity-container {
+    background-color: #455a64; /* Fundo do container no tema escuro */
+    color: #ecf0f1; /* Texto do container no tema escuro */
+}
+
+#login-container h2, #activity-container h2 {
+    margin-bottom: 10px; /* Espaçamento inferior do título do container */
+}
+
+/* Lista de Atividades */
+#activity-list, #received-activity-list, #professor-activity-list {
+    list-style-type: none; /* Remove marcadores da lista */
+    padding: 0; /* Remove preenchimento da lista */
+}
+
+/* Rodapé */
+footer {
+    text-align: center; /* Centraliza o texto do rodapé */
+    background-color: #2c3e50; /* Fundo do rodapé escuro */
+    color: #ecf0f1; /* Texto do rodapé claro */
+    padding: 10px 0; /* Preenchimento do rodapé */
+    border-radius: 10px; /* Bordas arredondadas */
+}
+
+/* Responsividade */
+@media (max-width: 768px) {
+    nav {
+        flex-direction: column; /* Coloca nav em coluna em telas menores */
+    }
+
+    button {
+        width: auto; /* Define largura automática para botões em telas menores */
+    }
+
+    .background {
+        padding: 30px 10px; /* Reduz preenchimento em telas menores */
+    }
+}
+
+/* Animações */
+@keyframes fadeIn {
+    from {
+        opacity: 0; /* Começa invisível */
+    }
+    to {
+        opacity: 1; /* Termina visível */
+    }
+}
